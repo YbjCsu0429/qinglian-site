@@ -15,7 +15,7 @@ const SITE = {
   members: ['苏重天', '余伯俊', '孟泽通', '洪雨蝶', '陈承鑫'],
   // 手机访问地址：部署到公网后填这里，首页与导览欢迎页会自动显示二维码
   // 用 `python tools/make_qr.py <你的网址> --install` 可自动写入并生成二维码
-  qrUrl: 'https://prescribed-easily-bracket-porcelain.trycloudflare.com',
+  qrUrl: 'https://ybjcsu0429.github.io/qinglian-site/',
   qrImg: 'assets/img/qr.png'
 };
 
