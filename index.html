@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>青廉筑梦 · 廉洁知识导航</title>
+<meta name="description" content="青廉筑梦——基于廉洁教育馆的大学生廉洁品格全周期涵养体系。四维九廉知识导航、人物事迹、情景实训、法规制度与廉洁AI问答。">
+<meta name="theme-color" content="#0d1b2a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="青廉筑梦 · 廉洁知识导航">
+<meta property="og:description" content="四维九廉体系、廉洁人物、情景实训、法规制度与廉洁AI问答——中南大学大学生廉洁品格全周期涵养项目的知识入口。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23a8322d'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='white' font-family='serif'>廉</text></svg>">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/home" aria-label="青廉筑梦 首页">
+      <span class="brand-seal">廉</span>
+      <span class="brand-text">
+        <strong>青廉筑梦</strong>
+        <em>廉洁知识导航</em>
+      </span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#/home">首页</a>
+      <a href="#/library">知识库</a>
+      <a href="#/figures">人物事迹</a>
+      <a href="#/scenario">情景实训</a>
+      <a href="#/rules">法规制度</a>
+      <a href="#/ai">廉洁AI</a>
+      <a href="#/about">关于项目</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="搜索" title="搜索（按 / 键）">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="菜单">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="view"></main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="brand brand-light">
+        <span class="brand-seal">廉</span>
+        <span class="brand-text"><strong>青廉筑梦</strong><em>廉洁知识导航</em></span>
+      </div>
+      <p>基于廉洁教育馆的大学生廉洁品格全周期涵养体系构建与实践<br>中南大学 · 大学生创新创业训练计划项目</p>
+    </div>
+    <div class="footer-col">
+      <h4>内容</h4>
+      <a href="#/library">知识库</a>
+      <a href="#/figures">人物事迹</a>
+      <a href="#/scenario">情景实训</a>
+      <a href="#/rules">法规制度</a>
+    </div>
+    <div class="footer-col">
+      <h4>工具</h4>
+      <a href="#/ai">廉洁AI 问答</a>
+      <a href="#/about">项目与团队</a>
+      <a href="#/library?dim=数字科技赋能">数字产品</a>
+    </div>
+    <div class="footer-col">
+      <h4>说明</h4>
+      <p class="muted small">本站为教育公益性质的学习导航，法规条文以官方发布文本为准；人物事迹均取自公开资料，仅用于教学。</p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 青廉筑梦项目组 · 中南大学</span>
+    <span>指导教师：孔志强　负责人：苏重天</span>
+  </div>
+</footer>
+
+<div class="search-overlay" id="searchOverlay" hidden>
+  <div class="search-panel">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="searchInput" type="search" placeholder="搜索文章、人物、制度、情景……" autocomplete="off">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/ai.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
