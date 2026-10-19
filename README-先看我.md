@@ -2,6 +2,25 @@
 
 > 这份文件解决一个问题：**明天要开馆了，我该干什么。**
 
+## 网站地址（已上线，永久有效）
+
+```
+https://ybjcsu0429.github.io/qinglian-site/
+```
+
+- 手机扫码 → 就是上面这个地址（站内二维码、立牌都已同步）
+- 馆内互动屏 → 读取本文件夹的 `index.html`，断网也能用
+- 源码仓库 → https://github.com/YbjCsu0429/qinglian-site
+
+**更新内容后怎么发布：**
+```powershell
+cd "C:\Users\boxiya\Documents\deepseek-harness\default-workspace\gitee-deploy"
+git add -A
+git commit -m "更新说明"
+git -c http.proxy=http://127.0.0.1:7892 push github master
+```
+推送后 1–2 分钟，线上自动更新（GitHub Pages 会自动构建，不用手动点）。
+
 ---
 
 ## 一、今天先做这 3 件事（约 10 分钟）
