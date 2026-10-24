@@ -162,6 +162,32 @@ function viewHome() {
     </div>
   </section>
 
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-head-row">
+        <div class="section-head">
+          <div class="eyebrow">文创</div>
+          <h2>把廉洁做成可以带走的东西</h2>
+          <p>贴纸、书签、明信片、卡套。莲取《爱莲说》，红楼取湘雅院训，卡套取廉洁教育馆的入口。</p>
+        </div>
+        <a class="link-more" href="#/creative">全部作品 →</a>
+      </div>
+      <div class="home-gallery">
+        ${['c1', 'c2', 'c6', 'c12'].map(id => {
+          const c = byId(CREATIVE, id);
+          return c ? `<a class="hg-item" href="#/creative"><img src="${c.img}" alt="${c.title}" loading="lazy"><span>${c.title}</span></a>` : '';
+        }).join('')}
+      </div>
+      <a class="home-link" href="#/resources">
+        <div>
+          <strong>学习资源</strong>
+          <span>政策依据 · 理论框架 · 传统文化 · 红色文化 · 警示案例 · 推荐书目 50 本</span>
+        </div>
+        <span class="hl-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
   <section class="section-tight" style="padding-bottom:76px">
     <div class="wrap">
       ${SITE.qrUrl ? `
@@ -311,6 +337,117 @@ function viewFigures() {
             <div class="callout" style="margin:14px 0 0;font-size:13.5px"><strong>给我们的启示：</strong>${f.lesson}</div>
           </div>`).join('')}
       </div>
+    </div>
+  </section>`;
+}
+
+/* ---------------- 文创 ---------------- */
+let creState = { type: '全部' };
+
+function viewCreative() {
+  const types = ['全部', ...new Set(CREATIVE.map(c => c.type))];
+  const list = CREATIVE.filter(c => creState.type === '全部' || c.type === creState.type);
+  return `
+  <section class="page-head">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="#/home">首页</a> / 文创作品</div>
+      <h1>文创作品</h1>
+      <p>把廉洁价值做成可以拿在手上的东西：贴纸、书签、明信片、卡套。每一件都对应一个出处——莲取《爱莲说》，红楼取湘雅院训，卡套取廉洁教育馆入口。</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="filters">
+        <span class="fl-label">类型</span>
+        ${types.map(t => `<button class="chip ${creState.type === t ? 'on' : ''}" data-cre="${t}">${t}</button>`).join('')}
+      </div>
+      <div class="gallery">
+        ${list.map(c => `
+          <figure class="c-item" data-img="${c.img}" data-title="${c.title}">
+            <img src="${c.img}" alt="${c.title}" loading="lazy">
+            <figcaption class="c-body">
+              <div class="c-type">${c.type}</div>
+              <h3>${c.title}</h3>
+              <p>${c.desc}</p>
+              <div class="c-tags">${c.tags.map(t => `<span class="tag tag-ink">${t}</span>`).join('')}</div>
+            </figcaption>
+          </figure>`).join('')}
+      </div>
+    </div>
+  </section>
+  <div class="lightbox" id="lightbox" hidden><img alt=""><div class="lb-hint">点击任意处关闭</div></div>`;
+}
+
+function bindCreative() {
+  document.querySelectorAll('[data-cre]').forEach(b => b.addEventListener('click', () => {
+    creState.type = b.dataset.cre;
+    view.innerHTML = viewCreative();
+    bindCreative();
+  }));
+  const lb = $('#lightbox');
+  document.querySelectorAll('.c-item').forEach(fig => {
+    fig.addEventListener('click', () => {
+      if (!lb) return;
+      lb.querySelector('img').src = fig.dataset.img;
+      lb.hidden = false;
+    });
+  });
+  if (lb) lb.addEventListener('click', () => { lb.hidden = true; });
+}
+
+/* ---------------- 学习资源 ---------------- */
+function viewResources() {
+  return `
+  <section class="page-head">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="#/home">首页</a> / 学习资源</div>
+      <h1>学习资源</h1>
+      <p>政策依据、理论框架、传统文化、红色文化、文学作品、警示案例、实践模式，以及 50 本推荐书目。
+         内容整理自项目组《廉洁教育 AI 训练资料》，供主题班会、读书会与课题调研取用。</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap res-wrap">
+      ${RESOURCES.map(sec => `
+        <section class="res-sec">
+          <div class="res-head">
+            <span class="res-no">${sec.no}</span>
+            <div>
+              <h2>${sec.title}</h2>
+              <p>${sec.lead}</p>
+            </div>
+          </div>
+          <div class="res-list">
+            ${sec.items.map(it => `
+              <article class="res-item">
+                <h3>${it.t}</h3>
+                <div class="res-meta">${it.m}</div>
+                <p>${it.d}</p>
+              </article>`).join('')}
+          </div>
+        </section>`).join('')}
+
+      <section class="res-sec">
+        <div class="res-head">
+          <span class="res-no">八</span>
+          <div>
+            <h2>推荐书目 50 本</h2>
+            <p>分六类：理论读本、家风家训、纪实警示、长篇小说、人物传记、历史文化通俗读物。</p>
+          </div>
+        </div>
+        <div class="book-grid">
+          ${BOOKS.map(b => `
+            <div class="book-col">
+              <h4>${b.cat}</h4>
+              <ol>${b.items.map(i => `<li>${i}</li>`).join('')}</ol>
+            </div>`).join('')}
+        </div>
+      </section>
+
+      <p class="muted small" style="margin-top:32px;line-height:1.9">
+        说明：以上内容整理自项目组内部《廉洁教育 AI 训练资料》，用于教学与研究参考。
+        涉及具体条文与案例的，请以官方发布文本和正式通报为准。
+      </p>
     </div>
   </section>`;
 }
@@ -633,6 +770,9 @@ function buildIndex() {
   FIGURES.forEach(f => idx.push({ t: f.name, s: f.brief, href: '#/figures', k: '人物 · ' + f.tag }));
   RULES.forEach(r => idx.push({ t: r.name, s: r.points[0], href: '#/rules', k: '制度 · ' + r.tag }));
   SCENARIOS.forEach(s => idx.push({ t: s.title, s: s.sub, href: '#/scenario/' + s.id, k: '情景 · 实训' }));
+  CREATIVE.forEach(c => idx.push({ t: c.title, s: c.desc.slice(0, 60), href: '#/creative', k: '文创 · ' + c.type }));
+  RESOURCES.forEach(r => r.items.forEach(i => idx.push({ t: i.t, s: i.d.slice(0, 60), href: '#/resources', k: '资源 · ' + r.title })));
+  BOOKS.forEach(b => idx.push({ t: b.cat, s: b.items.slice(0, 3).join('、'), href: '#/resources', k: '书目' }));
   KB.forEach(k => idx.push({ t: k.q, s: k.a.slice(0, 60), href: k.link || '#/ai', k: '知识 · AI' }));
   return idx;
 }
@@ -665,6 +805,8 @@ function render() {
   else if (route === 'library') { view.innerHTML = viewLibrary(params); bindLibrary(); }
   else if (route === 'article') view.innerHTML = viewArticle(id);
   else if (route === 'figures') view.innerHTML = viewFigures();
+  else if (route === 'creative') { view.innerHTML = viewCreative(); bindCreative(); }
+  else if (route === 'resources') view.innerHTML = viewResources();
   else if (route === 'scenario') {
     if (id) { view.innerHTML = viewScenario(id); const s = byId(SCENARIOS, id); if (s) bindScenario(s); }
     else view.innerHTML = viewScenarioList();
@@ -675,7 +817,7 @@ function render() {
   else view.innerHTML = notFound();
 
   document.title = (route === 'home' ? '青廉筑梦 · 廉洁知识导航' :
-    { library: '知识库', figures: '人物事迹', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
+    { library: '知识库', figures: '人物事迹', creative: '文创作品', resources: '学习资源', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
     + ' · 青廉筑梦';
 }
 

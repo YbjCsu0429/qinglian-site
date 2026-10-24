@@ -71,7 +71,7 @@ p{margin:0 0 1em}
 
 .nav{display:flex;gap:4px;margin-left:auto}
 .nav a{
-  padding:7px 13px;border-radius:8px;font-size:14.5px;color:var(--ink-2);
+  padding:7px 10px;border-radius:8px;font-size:14px;color:var(--ink-2);
   transition:.18s;position:relative;
 }
 .nav a:hover{background:var(--paper-2);color:var(--qing)}
@@ -480,6 +480,62 @@ body.kiosk::selection{background:transparent}
 }
 .attract-qr img{width:86px;height:86px;background:#fff;border-radius:6px;padding:4px;display:block}
 .attract-qr span{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.6;text-align:left}
+
+/* ---------- 文创画廊 ---------- */
+.gallery{column-count:3;column-gap:18px}
+.c-item{margin:0 0 18px;break-inside:avoid;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.25s}
+.c-item:hover{box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.c-item img{width:100%;display:block;cursor:zoom-in;background:#f5f3ee}
+.c-body{padding:16px 18px 18px}
+.c-type{font-size:11.5px;color:var(--zhu);letter-spacing:.16em;font-weight:600;margin-bottom:6px}
+.c-body h3{font-size:16px;margin-bottom:8px}
+.c-body p{font-size:13px;color:var(--muted);line-height:1.8;margin:0 0 10px}
+.c-tags{display:flex;gap:6px;flex-wrap:wrap}
+
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(12,20,26,.92);display:flex;align-items:center;justify-content:center;padding:40px;cursor:zoom-out}
+.lightbox img{max-width:92vw;max-height:86vh;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.lb-hint{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,.5);font-size:12px}
+
+/* ---------- 首页文创条 ---------- */
+.home-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.hg-item{position:relative;display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff;transition:.25s}
+.hg-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.hg-item img{width:100%;height:220px;object-fit:cover;display:block}
+.hg-item span{display:block;padding:10px 12px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)}
+
+.home-link{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 26px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:.25s}
+.home-link:hover{border-color:var(--qing);box-shadow:var(--shadow-sm)}
+.home-link strong{display:block;font-family:var(--serif);font-size:17px;margin-bottom:4px}
+.home-link span{font-size:13px;color:var(--muted)}
+.hl-arrow{font-size:20px;color:var(--qing)}
+
+/* ---------- 学习资源 ---------- */
+.res-wrap{max-width:980px;margin-inline:auto}
+.res-sec{padding:38px 0;border-bottom:1px solid var(--line)}
+.res-sec:first-child{padding-top:0}
+.res-head{display:flex;gap:18px;align-items:flex-start;margin-bottom:24px}
+.res-no{flex-shrink:0;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--qing-3);color:var(--qing);font-family:var(--serif);font-size:18px;font-weight:700}
+.res-head h2{font-size:22px;margin-bottom:8px}
+.res-head p{font-size:14px;color:var(--muted);margin:0;max-width:44em;line-height:1.85}
+.res-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.res-item{padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.res-item h3{font-size:15px;line-height:1.6;margin-bottom:6px}
+.res-meta{font-size:12px;color:var(--zhu);margin-bottom:8px;letter-spacing:.02em}
+.res-item p{font-size:13px;color:#475569;line-height:1.85;margin:0}
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.book-col h4{font-size:15px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--qing-3)}
+.book-col ol{margin:0;padding-left:1.2em;font-size:13px;color:#475569;line-height:1.9}
+.book-col li{margin-bottom:4px}
+
+@media (max-width:980px){
+  .gallery{column-count:2}
+  .home-gallery{grid-template-columns:repeat(2,1fr)}
+  .res-list,.book-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .gallery{column-count:1}
+  .hg-item img{height:180px}
+}
 
 /* ---------- footer ---------- */
 .site-footer{background:var(--ink);color:rgba(255,255,255,.7);padding:64px 0 28px;margin-top:0}
