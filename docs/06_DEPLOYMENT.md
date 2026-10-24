@@ -26,15 +26,23 @@
 # 1. 把 site/ 的改动同步到部署副本
 Copy-Item "<工作区>\site\*" "<工作区>\gitee-deploy\" -Recurse -Force
 
-# 2. 提交并推送
+# 2. 提交并推送（代理开着时带参数，关掉时直连）
 cd "<工作区>\gitee-deploy"
 git add -A
 git commit -m "更新说明"
-git -c http.proxy=http://127.0.0.1:7892 push github master
+git -c http.proxy=http://127.0.0.1:7892 push github master   # 代理开启时
+# 代理关闭时用：git -c http.proxy= -c https.proxy= push github master
 ```
 
-**为什么要带 `-c http.proxy`**：本机开着系统代理（`127.0.0.1:7892`），
-但 **git 不读系统代理**，不加这个参数会 `Connection was reset`。
+**关于代理**：本机的系统代理（`127.0.0.1:7892`）不是常开的。
+
+| 状态 | 命令 |
+|---|---|
+| 代理开启 | `git -c http.proxy=http://127.0.0.1:7892 push github master` |
+| 代理关闭 | `git -c http.proxy= -c https.proxy= push github master` |
+
+先确认端口是否在监听：`Test-NetConnection 127.0.0.1 -Port 7892`。
+直连 github 较慢（约 15 秒连接），但可用。
 
 推送成功后 1–2 分钟，线上自动更新。可用下面命令确认：
 
