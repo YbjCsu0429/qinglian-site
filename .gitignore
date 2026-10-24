@@ -1,3 +1,26 @@
-﻿*.tmp
+# 系统与编辑器
 Thumbs.db
 desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# 本地备份与临时文件
+*.bak
+*.tmp
+*.log
+data.js.bak
+
+# 参考资料原文件（含个人信息，不入公开仓库）
+references/*.docx
+references/*.pdf
+references/*.doc
+
+# 本地生成的临时输出
+out/
+.cache/
+
+# 依赖
+node_modules/
+__pycache__/
+*.pyc
