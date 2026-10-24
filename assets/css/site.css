@@ -481,33 +481,39 @@ body.kiosk::selection{background:transparent}
 .attract-qr img{width:86px;height:86px;background:#fff;border-radius:6px;padding:4px;display:block}
 .attract-qr span{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.6;text-align:left}
 
-/* ---------- 文创画廊 ---------- */
-.gallery{column-count:3;column-gap:18px}
-.c-item{margin:0 0 18px;break-inside:avoid;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.25s}
-.c-item:hover{box-shadow:var(--shadow-md);border-color:var(--line-2)}
-.c-item img{width:100%;display:block;cursor:zoom-in;background:#f5f3ee}
-.c-body{padding:16px 18px 18px}
-.c-type{font-size:11.5px;color:var(--zhu);letter-spacing:.16em;font-weight:600;margin-bottom:6px}
-.c-body h3{font-size:16px;margin-bottom:8px}
-.c-body p{font-size:13px;color:var(--muted);line-height:1.8;margin:0 0 10px}
-.c-tags{display:flex;gap:6px;flex-wrap:wrap}
+/* ---------- 首页 A 版：短首屏 + 图集 ---------- */
+.hero-a-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:46px 0 30px}
+.hero-copy h1{font-size:clamp(32px,3.6vw,46px);line-height:1.28;margin-bottom:18px}
+.hero-a .hero-stats{margin-top:6px}
+.hero-collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;height:340px}
+.hero-collage a{display:block;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#f6f3ea;transition:.25s}
+.hero-collage a:hover{transform:translateY(-2px);border-color:rgba(127,212,198,.5)}
+.hero-collage img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-collage .hc-tall{grid-row:span 2}
+.hero-collage .hc-tall img{object-fit:contain;background:#f6f3ea}
 
-.lightbox{position:fixed;inset:0;z-index:300;background:rgba(12,20,26,.92);display:flex;align-items:center;justify-content:center;padding:40px;cursor:zoom-out}
-.lightbox img{max-width:92vw;max-height:86vh;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
-.lb-hint{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,.5);font-size:12px}
+.entry-sec{padding:52px 0 16px}
+.entry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.entry{display:flex;gap:14px;align-items:center;padding:20px 22px;background:#fff;border:1px solid var(--line);border-radius:12px;transition:.22s}
+.entry:hover{border-color:var(--qing);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.entry-ico{width:40px;height:40px;border-radius:10px;background:var(--qing-3);color:var(--qing);display:grid;place-items:center;font-family:var(--serif);font-size:17px;flex-shrink:0}
+.entry-text b{display:block;font-size:16px;font-family:var(--serif);margin-bottom:2px}
+.entry-text em{font-style:normal;font-size:12.5px;color:var(--muted)}
 
-/* ---------- 首页文创条 ---------- */
-.home-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
-.hg-item{position:relative;display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff;transition:.25s}
-.hg-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.hg-item img{width:100%;height:220px;object-fit:cover;display:block}
-.hg-item span{display:block;padding:10px 12px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)}
+/* 文章插图 */
+.prose-img{margin:34px 0;text-align:center}
+.prose-img img{max-width:100%;border-radius:10px;border:1px solid var(--line);background:#f6f3ea}
+.prose-img figcaption{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.75}
 
-.home-link{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 26px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:.25s}
-.home-link:hover{border-color:var(--qing);box-shadow:var(--shadow-sm)}
-.home-link strong{display:block;font-family:var(--serif);font-size:17px;margin-bottom:4px}
-.home-link span{font-size:13px;color:var(--muted)}
-.hl-arrow{font-size:20px;color:var(--qing)}
+@media (max-width:980px){
+  .hero-a-inner{grid-template-columns:1fr;gap:28px}
+  .hero-collage{height:260px}
+  .entry-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .entry-grid{grid-template-columns:1fr}
+  .hero-collage{height:220px}
+}
 
 /* ---------- 学习资源 ---------- */
 .res-wrap{max-width:980px;margin-inline:auto}
