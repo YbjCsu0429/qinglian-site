@@ -418,6 +418,8 @@ function viewScenarioList() {
       <div class="sc-grid">
         ${SCENARIOS.map(s => `
           <a class="sc-card" href="#/scenario/${s.id}">
+            <div class="sc-img"><img src="${s.img}" alt="${s.title}" loading="lazy"></div>
+            <div class="sc-body">
             <div class="sc-idx">${s.idx}</div>
             <h3>${s.title}</h3>
             <div class="sc-sub">${s.sub}</div>
@@ -425,6 +427,7 @@ function viewScenarioList() {
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <span class="tag tag-zhu">${s.decisions.length} 个决策点</span>
               <span class="tag tag-ink">${s.roles.length} 个角色</span>
+            </div>
             </div>
           </a>`).join('')}
       </div>
@@ -450,6 +453,7 @@ function viewScenario(id) {
   <section class="section-tight">
     <div class="wrap">
       <div class="sc-present">
+        <div class="sc-hero"><img src="${s.img}" alt="${s.title}" loading="lazy"></div>
         <div class="sc-brief">
           <h2>情景背景</h2>
           <p>${s.scene}</p>

@@ -182,6 +182,7 @@ const SITE = {
 
 | 字段 | 约束 |
 |---|---|
+| `img` | 场景配图，800×571，放在 `assets/img/scenes/` |
 | `decisions` | 固定 3 个，选项固定 3 个 |
 | `options[].level` | `good`（守住）/ `mid`（中间）/ `bad`（越界），决定结果框颜色 |
 | `roles` | 4 个角色：你、候选人/当事人、旁观者、同事 |
