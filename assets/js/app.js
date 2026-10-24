@@ -172,11 +172,18 @@ function viewHome() {
       </div>
       <div class="fig-grid">
         ${FIGURES.slice(0, 4).map(f => `
-          <a class="fig-card" href="#/figures">
-            <div class="fig-seal">${f.seal}</div>
-            <h3>${f.name}</h3>
-            <div class="fig-era">${f.era} · ${f.tag}</div>
-            <p>${f.brief}</p>
+          <a class="fig-card fig-card-h" href="#/figures">
+            <div class="fc-img"><img src="${f.img}" alt="${f.name}" loading="lazy"></div>
+            <div class="fc-body">
+              <div class="fc-head">
+                <div class="fig-seal">${f.seal}</div>
+                <div>
+                  <h3>${f.name}</h3>
+                  <div class="fig-era">${f.era} · ${f.tag}</div>
+                </div>
+              </div>
+              <p>${f.brief}</p>
+            </div>
           </a>`).join('')}
       </div>
     </div>
@@ -319,17 +326,20 @@ function viewFigures() {
     <div class="wrap">
       <div class="card-grid two">
         ${FIGURES.map(f => `
-          <div class="fig-card" style="padding:28px 26px">
-            <div style="display:flex;gap:16px;align-items:flex-start">
-              <div class="fig-seal" style="margin-bottom:0">${f.seal}</div>
-              <div>
-                <h3 style="font-size:19px">${f.name}</h3>
-                <div class="fig-era">${f.era} · ${f.tag}</div>
+          <div class="fig-card fig-card-v">
+            <div class="fc-img"><img src="${f.img}" alt="${f.name}" loading="lazy"></div>
+            <div class="fc-body">
+              <div class="fc-head">
+                <div class="fig-seal">${f.seal}</div>
+                <div>
+                  <h3>${f.name}</h3>
+                  <div class="fig-era">${f.era} · ${f.tag}</div>
+                </div>
               </div>
+              <p>${f.brief}</p>
+              ${f.body.map(p => `<p class="fc-p">${p}</p>`).join('')}
+              <div class="callout fc-lesson"><strong>给我们的启示：</strong>${f.lesson}</div>
             </div>
-            <p style="margin:14px 0 16px">${f.brief}</p>
-            ${f.body.map(p => `<p style="font-size:13.5px;color:#3b4a57;margin:0 0 10px">${p}</p>`).join('')}
-            <div class="callout" style="margin:14px 0 0;font-size:13.5px"><strong>给我们的启示：</strong>${f.lesson}</div>
           </div>`).join('')}
       </div>
     </div>

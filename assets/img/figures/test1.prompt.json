@@ -1,0 +1,11 @@
+{
+  "prompt": "close-up still life of a black winged Chinese official hat resting on a dark wooden desk, a small wooden gavel beside it, single soft light, dark background",
+  "negative": "text, letters, words, chinese characters, calligraphy, scroll, certificate, document, paper with writing, seal, stamp, signature, watermark, logo, human face, portrait, blurry, busy",
+  "size": "768x768",
+  "steps": 4,
+  "cfg": 1.0,
+  "seed": 1860568313,
+  "model": "flux1-schnell-Q4_K_S.gguf",
+  "output": "site\\assets\\img\\figures\\test1.png",
+  "seconds": 18.2
+}
