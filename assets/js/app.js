@@ -35,7 +35,7 @@ function viewHome() {
         <p class="hero-kicker">中南大学　大学生创新创业训练计划</p>
         <h1>青廉筑梦</h1>
         <p class="hero-sub">廉洁知识导航</p>
-        <p class="hero-lead">从廉洁教育馆出发，把参观、阅读和情景练习连成一条线。四维九廉，12 篇专题，${KB.length} 条带出处的知识。</p>
+        <p class="hero-lead">从廉洁教育馆出发，把参观、阅读和情景练习连成一条线。四维九廉，${ARTICLES.length} 篇专题，${KB.length} 条带出处的知识。</p>
         <p class="hero-actions">
           <a class="btn btn-primary" href="#/library">进入知识库</a>
           <a class="btn btn-line" href="#/scenario">做一次情景选择</a>
@@ -45,7 +45,7 @@ function viewHome() {
       <aside class="hero-label" aria-label="项目信息">
         <div class="label-row"><span>展项</span><b>青廉筑梦 · 廉洁知识导航</b></div>
         <div class="label-row"><span>体系</span><b>四维 / 九廉</b></div>
-        <div class="label-row"><span>内容</span><b>12 篇专题 · 3 个情景 · ${KB.length} 条知识</b></div>
+        <div class="label-row"><span>内容</span><b>${ARTICLES.length} 篇专题 · ${SCENARIOS.length} 个情景 · ${KB.length} 条知识</b></div>
         <div class="label-row"><span>单位</span><b>中南大学</b></div>
       </aside>
     </div>
@@ -55,12 +55,12 @@ function viewHome() {
     <div class="wrap">
       <div class="entry-grid">
         ${[
-          ['书', '知识库', '12 篇专题，按四维九廉分类', '#/library'],
+          ['书', '知识库', `${ARTICLES.length} 篇专题，按四维九廉分类`, '#/library'],
           ['人', '人物事迹', '8 位廉吏与时代楷模', '#/figures'],
           ['资', '学习资源', '政策、理论、50 本书单', '#/resources'],
           ['语', '廉洁语录', '历届领导人论廉洁', '#/quotes'],
           ['书', '廉洁书单', '27 本，按主题分类', '#/books'],
-          ['景', '情景实训', '3 个脚本，9 个决策点', '#/scenario'],
+          ['景', '情景实训', `${SCENARIOS.length} 个脚本，${SCENARIOS.length * 3} 个决策点`, '#/scenario'],
           ['法', '法规制度', '10 部制度要点', '#/rules'],
           ['问', '廉洁AI', `${KB.length} 条知识，带出处`, '#/ai'],
           ['项', '关于项目', '四维九廉与团队', '#/about']
@@ -136,7 +136,7 @@ function viewHome() {
       <div class="section-head-row">
         <div class="section-head">
           <div class="eyebrow">沉浸实践</div>
-          <h2>三个情景</h2>
+          <h2>${SCENARIOS.length} 个情景</h2>
           <p>不动钱，动的是公正。每个情景有三个决策点，选完才看到代价。</p>
         </div>
         <a class="link-more" href="#/scenario">全部情景</a>
@@ -408,7 +408,7 @@ function viewScenarioList() {
     <div class="wrap">
       <div class="breadcrumb"><a href="#/home">首页</a> / 情景实训</div>
       <h1>情景实训</h1>
-      <p>三个脚本取自真实工作场景：学生干部的资源分配、科研实验的数据取舍、临床实习的利益冲突。每个情景有三个决策点，选完会看到直接后果与深层影响。</p>
+      <p>${SCENARIOS.length} 个脚本取自真实工作场景：评优、科研数据、临床红包，以及班费、论文署名与推免材料。每个情景有三个决策点，选完会看到直接后果与深层影响。</p>
     </div>
   </section>
   <section class="section-tight">
