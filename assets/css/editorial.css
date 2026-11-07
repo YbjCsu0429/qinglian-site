@@ -433,3 +433,96 @@ a{text-underline-offset:3px}
   .quote-item p{font-size:19px}
   .book-item{grid-template-columns:1fr;gap:6px}
 }
+/* ===========================================================
+   动效：只做“回应动作”的效果，不做全站漂浮
+   =========================================================== */
+
+/* 首屏一次性入场 */
+@keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero-kicker,.hero-copy h1,.hero-sub,.hero-lead,.hero-actions,.hero-note,.hero-label{
+  animation:heroIn .7s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero-copy h1{animation-delay:.04s}
+.hero-sub{animation-delay:.1s}
+.hero-lead{animation-delay:.16s}
+.hero-actions{animation-delay:.22s}
+.hero-note{animation-delay:.26s}
+.hero-label{animation-delay:.12s}
+
+/* 目录图标：悬停放大 */
+.entry{display:flex;gap:14px;align-items:flex-start}
+.entry-ico{
+  display:grid;place-items:center;flex:0 0 36px;
+  width:36px;height:36px;margin:2px 0 0;
+  border:1px solid var(--line-2);background:transparent;color:var(--muted);
+  font-family:var(--serif);font-size:15px;line-height:1;border-radius:0;
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .28s,color .28s;
+}
+.entry:hover .entry-ico,.entry:focus-visible .entry-ico{
+  transform:scale(1.12) rotate(-2deg);border-color:var(--zhu);color:var(--zhu);
+}
+.entry-text b{transition:color .18s}
+.entry:hover .entry-text b{color:var(--zhu)}
+
+/* 图片：在画框内缓慢放大，不整卡上浮 */
+.fc-img,.sc-img,.prose-img{overflow:hidden}
+.fc-img img,.sc-img img,.prose-img img{
+  transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s;
+}
+a:hover .fc-img img,a:focus-visible .fc-img img,
+a:hover .sc-img img,a:focus-visible .sc-img img,
+.prose-img:hover img{transform:scale(1.045)}
+
+/* 印章：悬停轻微放大 */
+.fig-seal,.brand-seal{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.fig-card:hover .fig-seal{transform:scale(1.1)}
+.brand:hover .brand-seal{transform:scale(1.06)}
+
+/* 导航：下划线从左侧展开 */
+.nav a::after{
+  content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;
+  background:var(--zhu);transform:scaleX(0);transform-origin:left;
+  transition:transform .28s cubic-bezier(.2,.7,.2,1);
+}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1)}
+.nav a.active::after{background:var(--zhu)}
+
+/* 按钮：底色从左侧扫入 */
+.btn{
+  background-image:linear-gradient(var(--zhu),var(--zhu));
+  background-size:0% 100%;background-repeat:no-repeat;
+  transition:background-size .28s cubic-bezier(.2,.7,.2,1),color .2s,border-color .2s;
+}
+.btn:hover{background-size:100% 100%;color:var(--paper);border-color:var(--zhu)}
+
+/* 文字链接：下划线展开 */
+.link-more{transition:color .2s,border-color .2s}
+.link-more:hover{color:var(--zhu);border-color:var(--zhu)}
+
+/* 书单与语录的轻反馈 */
+.book-item h3{transition:color .18s}
+.book-item:hover h3{color:var(--zhu)}
+.quote-item{transition:border-color .3s}
+.quote-item:hover{border-left-color:var(--ink)}
+
+/* 图注/标签不做位移动画 */
+
+@media (prefers-reduced-motion:reduce){
+  .hero-kicker,.hero-copy h1,.hero-sub,.hero-lead,.hero-actions,.hero-note,.hero-label{animation:none}
+  .entry-ico,.fc-img img,.sc-img img,.prose-img img,.fig-seal,.brand-seal,.nav a::after,.btn{transition:none}
+}
+/* 搜索/菜单图标：悬停放大 */
+.icon-btn{transition:transform .2s cubic-bezier(.2,.7,.2,1),color .18s,background .18s}
+.icon-btn:hover{transform:scale(1.12)}
+
+/* 情景卡图片：同样在画框内放大 */
+.sc-card:hover .sc-img img{transform:scale(1.045)}
+
+/* 路由切换：整页一次轻微淡入，不做逐块动画 */
+@keyframes pageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+#view{animation:pageIn .32s cubic-bezier(.2,.7,.2,1) both}
+
+@media (prefers-reduced-motion:reduce){
+  .icon-btn{transition:none}
+  #view{animation:none}
+}
