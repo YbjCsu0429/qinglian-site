@@ -896,7 +896,7 @@ function bindMagnifier() {
     });
 
     const chars = [...h2.querySelectorAll('.mag-char')];
-    const radius = 92;
+    const radius = 84;
 
     const reset = () => chars.forEach(span => {
       span.style.transform = '';
@@ -910,7 +910,7 @@ function bindMagnifier() {
         const dist = Math.abs(center - e.clientX);
         if (dist < radius) {
           const k = 1 - dist / radius;
-          span.style.transform = `translateY(${(-k * 9).toFixed(1)}px) scale(${(1 + k * 0.45).toFixed(3)})`;
+          span.style.transform = `translateY(${(-k * 3).toFixed(1)}px) scale(${(1 + k * 0.12).toFixed(3)})`;
           span.classList.add('is-hot');
         } else {
           span.style.transform = '';
