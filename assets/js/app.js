@@ -32,28 +32,22 @@ function viewHome() {
   <section class="hero hero-a">
     <div class="wrap hero-a-inner">
       <div class="hero-copy">
-        <div class="hero-eyebrow">中南大学 · 大学生创新创业训练计划</div>
-        <h1>把廉洁，从<em>口号</em>变成<br>可以练习的选择</h1>
-        <p class="hero-lead">四维九廉体系 · 12 篇专题 · 3 个可动手的情景 · ${KB.length} 条带出处的知识。你可以读，可以查，也可以在情景里做一次真实的选择。</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#/scenario">做一次情景选择</a>
-          <a class="btn btn-ghost" href="#/library">进入知识库</a>
-          <a class="btn btn-ghost" href="#/ai">问问廉洁AI</a>
-        </div>
+        <p class="hero-kicker">中南大学　大学生创新创业训练计划</p>
+        <h1>青廉筑梦</h1>
+        <p class="hero-sub">廉洁知识导航</p>
+        <p class="hero-lead">从廉洁教育馆出发，把参观、阅读和情景练习连成一条线。四维九廉，12 篇专题，${KB.length} 条带出处的知识。</p>
+        <p class="hero-actions">
+          <a class="btn btn-primary" href="#/library">进入知识库</a>
+          <a class="btn btn-line" href="#/scenario">做一次情景选择</a>
+        </p>
+        <p class="hero-note">馆内触摸屏可离线使用</p>
       </div>
-      <div class="hero-collage">
-        <a href="#/article/a3" class="hc-tall"><img src="assets/img/wenchuang/bookmark-2.jpg" alt="书签 · 出淤泥而不染"></a>
-        <a href="#/article/a3"><img src="assets/img/wenchuang/sticker-1.jpg" alt="廉洁主题贴纸"></a>
-        <a href="#/article/a3"><img src="assets/img/wenchuang/postcard-1.jpg" alt="明信片 · 湘雅红楼"></a>
-      </div>
-    </div>
-    <div class="wrap">
-      <div class="hero-stats">
-        <div><b>4</b><span>支撑维度</span></div>
-        <div><b>9</b><span>九廉任务群</span></div>
-        <div><b>${ARTICLES.length}</b><span>专题文章</span></div>
-        <div><b>${KB.length}</b><span>知识条目</span></div>
-      </div>
+      <aside class="hero-label" aria-label="项目信息">
+        <div class="label-row"><span>展项</span><b>青廉筑梦 · 廉洁知识导航</b></div>
+        <div class="label-row"><span>体系</span><b>四维 / 九廉</b></div>
+        <div class="label-row"><span>内容</span><b>12 篇专题 · 3 个情景 · ${KB.length} 条知识</b></div>
+        <div class="label-row"><span>单位</span><b>中南大学</b></div>
+      </aside>
     </div>
   </section>
 
@@ -80,8 +74,8 @@ function viewHome() {
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">四维</div>
-        <h2>四个维度，一条认知曲线</h2>
-        <p>从“知道”到“认同”再到“做到”，每一维承担不同的转化任务，不能互相替代。</p>
+        <h2>四个维度</h2>
+        <p>从知道到认同，再到做到。每一维负责一段，不能互相替代。</p>
       </div>
       <div class="dim-row">
         ${DIMS.map(d => `
@@ -99,10 +93,10 @@ function viewHome() {
       <div class="section-head-row">
         <div class="section-head">
           <div class="eyebrow">九廉</div>
-          <h2>九个任务群，覆盖全周期</h2>
-          <p>每一项“廉”都要完成一次最小闭环：有载体、有责任人、有验收标准、有证据。</p>
+          <h2>九个任务群</h2>
+          <p>每一项都要落到具体的事：谁来做、做到什么程度、留下什么记录。</p>
         </div>
-        <a class="link-more" href="#/library">查看全部文章 →</a>
+        <a class="link-more" href="#/library">查看全部文章</a>
       </div>
       <div class="jiu-grid">
         ${JIU.map(j => `
@@ -125,7 +119,7 @@ function viewHome() {
         <div class="section-head">
           <div class="eyebrow">精选</div>
           <h2>先读这四篇</h2>
-          <p>如果只有十分钟，从这四篇开始：它能解释这套体系为什么这样设计。</p>
+          <p>如果只有十分钟，从这四篇开始。</p>
         </div>
       </div>
       <div class="card-grid two">
@@ -139,10 +133,10 @@ function viewHome() {
       <div class="section-head-row">
         <div class="section-head">
           <div class="eyebrow">沉浸实践</div>
-          <h2>三个情景，三种“近身”的风险</h2>
-          <p>不动钱，动的是公正。每个情景都有一组必须作出的选择，选完才知道代价在哪里。</p>
+          <h2>三个情景</h2>
+          <p>不动钱，动的是公正。每个情景有三个决策点，选完才看到代价。</p>
         </div>
-        <a class="link-more" href="#/scenario">全部情景 →</a>
+        <a class="link-more" href="#/scenario">全部情景</a>
       </div>
       <div class="sc-grid">
         ${SCENARIOS.map(s => `
@@ -165,10 +159,10 @@ function viewHome() {
       <div class="section-head-row">
         <div class="section-head">
           <div class="eyebrow">人物事迹</div>
-          <h2>他们把廉洁活成了具体的样子</h2>
-          <p>不是道德标本，而是在具体处境里做过具体选择的人。</p>
+          <h2>八个人物</h2>
+          <p>不是道德标本，是在具体处境里做过选择的人。</p>
         </div>
-        <a class="link-more" href="#/figures">全部人物 →</a>
+        <a class="link-more" href="#/figures">全部人物</a>
       </div>
       <div class="fig-grid">
         ${FIGURES.slice(0, 4).map(f => `
@@ -222,7 +216,7 @@ function articleCard(a) {
     </div>
     <h3>${a.title}</h3>
     <p>${a.excerpt}</p>
-    <div class="a-foot"><span>约 ${a.minutes} 分钟</span><span>阅读 →</span></div>
+    <div class="a-foot"><span>阅读</span></div>
   </a>`;
 }
 
@@ -870,3 +864,5 @@ function initKiosk() {
 }
 
 if (KIOSK) initKiosk();
+
+
