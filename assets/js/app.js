@@ -249,13 +249,15 @@ function viewLibrary(params) {
   </section>
   <section class="section-tight">
     <div class="wrap">
+      <div class="lib-filters">
       <div class="filters">
         <span class="fl-label">维度</span>
         ${dims.map(d => `<button class="chip ${libState.dim === d ? 'on' : ''}" data-dim="${d}">${d === 'all' ? '全部' : d}</button>`).join('')}
       </div>
-      <div class="filters" style="margin-top:-16px">
+      <div class="filters">
         <span class="fl-label">九廉</span>
         ${jius.map(j => `<button class="chip ${libState.jiu === j ? 'on' : ''}" data-jiu="${j}">${j === 'all' ? '全部' : j}</button>`).join('')}
+      </div>
       </div>
       <div class="card-grid">
         ${list.length ? list.map(a => articleCard(a)).join('') : '<p class="muted">这个组合下还没有文章，换个筛选条件试试。</p>'}
@@ -780,13 +782,17 @@ function viewQuotes() {
   </section>
   <section class="section-tight">
     <div class="wrap quotes-wrap">
+      <nav class="quote-index" aria-label="人物索引">
+        <span class="qi-label">索引</span>
+        ${groups.map(g => `<button type="button" data-qwho="${g.who}">${g.who}</button>`).join('')}
+      </nav>
       ${groups.map(g => {
         const side = g.items.length === 1;
         const body = side
           ? `<div class="quote-side"><div class="quote-side-text">${itemsHtml(g.items)}</div>${coverHtml(g.who)}</div>`
           : `${coverHtml(g.who)}${itemsHtml(g.items)}`;
         return `
-        <section class="quote-group${side ? ' quote-group--side' : ''}">
+        <section id="quote-${g.who}" class="quote-group${side ? ' quote-group--side' : ''}">
           <div class="quote-group-head"><span class="quote-seal">${g.who.charAt(0)}</span><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
           ${body}
         </section>`;
@@ -970,6 +976,29 @@ function bindMagnifier() {
   });
 }
 
+function bindQuoteIndex() {
+  document.querySelectorAll('.quote-index [data-qwho]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById('quote-' + btn.dataset.qwho);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
+function initBackTop() {
+  if (document.querySelector('.back-top')) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'back-top';
+  btn.textContent = '回到顶部';
+  btn.setAttribute('aria-label', '回到顶部');
+  document.body.appendChild(btn);
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  const update = () => btn.classList.toggle('show', window.scrollY > 600);
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
 /* ---------------- 路由 ---------------- */
 function render() {
   const { route, id, params } = parseHash();
@@ -981,7 +1010,7 @@ function render() {
   else if (route === 'article') view.innerHTML = viewArticle(id);
   else if (route === 'figures') view.innerHTML = viewFigures();
   else if (route === 'resources') view.innerHTML = viewResources();
-  else if (route === 'quotes') view.innerHTML = viewQuotes();
+  else if (route === 'quotes') { view.innerHTML = viewQuotes(); bindQuoteIndex(); }
   else if (route === 'books') view.innerHTML = viewBooks();
   else if (route === 'scenario') {
     if (id) { view.innerHTML = viewScenario(id); const s = byId(SCENARIOS, id); if (s) bindScenario(s); }
@@ -1029,6 +1058,7 @@ document.addEventListener('keydown', e => {
 
 initSmoothScroll();
 initScrollProgress();
+initBackTop();
 render();
 
 /* ===========================================================

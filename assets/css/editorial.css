@@ -742,3 +742,119 @@ a:hover .fc-img img,a:hover .sc-img img{transform:scale(1.07)}
   .hero-shade{background:rgba(242,239,230,.94)}
   .hero-credit{right:20px;bottom:12px}
 }
+
+/* ===========================================================
+   界面精修：导航、索引、可读性、焦点、打印
+   =========================================================== */
+
+/* 搜索入口：桌面显示文字 */
+.icon-btn{display:inline-flex;align-items:center;gap:5px}
+.search-label{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:.02em}
+@media (max-width:900px){.search-label{display:none}}
+
+/* 小字统一提一档，图注不再用最淡的灰 */
+.quote-cover figcaption,.hero-credit,.fig-era,.book-meta,.sc-tags,.a-meta,.res-meta,
+.label-row span,.filters .fl-label,.quote-group-head span,.footer-col h4{font-size:12.5px;color:var(--muted)}
+.tag{font-size:11.5px}
+
+/* 键盘焦点 */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--zhu);outline-offset:3px;
+}
+
+/* 语录人物索引：吸在页头下面 */
+.quote-index{
+  position:sticky;top:64px;z-index:45;
+  display:flex;align-items:center;gap:2px;flex-wrap:wrap;
+  padding:11px 0;margin-bottom:6px;
+  background:var(--paper);border-bottom:1px solid var(--line);
+}
+.qi-label{font-family:var(--sans);font-size:11.5px;color:var(--muted-2);letter-spacing:.14em;margin-right:8px}
+.quote-index button{
+  border:0;background:none;padding:4px 9px;cursor:pointer;
+  font-family:var(--serif);font-size:14px;color:var(--ink-2);
+}
+.quote-index button:hover{color:var(--zhu)}
+.quote-group{scroll-margin-top:132px}
+
+/* 知识库筛选：吸顶 */
+.lib-filters{
+  position:sticky;top:64px;z-index:40;
+  background:var(--paper);padding:14px 0 10px;margin:0 0 8px;
+  border-bottom:1px solid var(--line);
+}
+.lib-filters .filters{margin:0 0 8px}
+.lib-filters .filters:last-child{margin-bottom:0}
+
+/* 书单分类标题吸顶 */
+.book-cat h2{position:sticky;top:64px;z-index:5;background:var(--paper);padding:8px 0}
+.book-cat{scroll-margin-top:120px}
+
+/* 回到顶部 */
+.back-top{
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  border:1px solid var(--ink);background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:12px;padding:8px 12px;cursor:pointer;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .25s,transform .25s,color .2s,border-color .2s;
+}
+.back-top.show{opacity:1;transform:none;pointer-events:auto}
+.back-top:hover{color:var(--zhu);border-color:var(--zhu)}
+
+/* 人物页：图片占满左栏，减少下方空白 */
+.fig-card-v{grid-template-columns:260px 1fr;align-items:stretch}
+.fig-card-v .fc-img{height:100%;min-height:0}
+.fig-card-v .fc-img img{height:100%;aspect-ratio:auto;object-fit:cover;object-position:center}
+
+/* 情景卡：正文统一三行，底部对齐 */
+.sc-card{display:flex;flex-direction:column}
+.sc-card p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sc-tags{margin-top:auto}
+
+/* 页脚：三列，行距放松 */
+.footer-grid{grid-template-columns:1.6fr 1fr 1.3fr}
+.footer-col h4{font-size:12.5px;color:var(--muted)}
+.footer-col a{line-height:2}
+
+/* 首屏展签：更像浮在照片上的一张纸 */
+.hero-label{
+  background:rgba(242,239,230,.94);
+  border-color:rgba(255,255,255,.55);
+  box-shadow:0 18px 40px rgba(22,21,15,.08);
+}
+
+/* 图片未加载时的纸色占位 */
+img{background:var(--paper-2)}
+
+/* 打印：只留正文 */
+@media print{
+  .site-header,.site-footer,.search-overlay,.scroll-progress,.back-top,.quote-index,.lib-filters{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  #view{animation:none!important;transform:none!important}
+  .wrap{max-width:none!important;padding:0!important}
+  .section,.section-tight{padding:0!important}
+  .prose,.quotes-wrap,.books-wrap{max-width:none!important}
+  a{color:#000!important;text-decoration:none!important}
+  img{filter:none!important;background:none!important}
+  .hero-bg,.hero-shade{display:none!important}
+  .hero-a{background:#fff!important}
+}
+
+/* 修正：搜索文字不换行 */
+.search-label{white-space:nowrap}
+.header-actions .icon-btn{flex:0 0 auto}
+
+/* 修正：筛选两行不重叠 */
+.lib-filters .filters{margin:0 0 6px!important;align-items:center}
+.lib-filters .filters:last-child{margin-bottom:0!important}
+
+/* 修正：人物页改为 4:5，避免竖切太狠 */
+.fig-card-v{grid-template-columns:260px 1fr;align-items:start}
+.fig-card-v .fc-img{height:auto}
+.fig-card-v .fc-img img{height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top}
+
+@media (max-width:700px){
+  .quote-index{flex-wrap:wrap;width:100%;max-width:100%;gap:0}
+  .qi-label{display:none}
+  .quote-index button{padding:4px 7px;font-size:13px}
+}
