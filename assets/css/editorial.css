@@ -531,3 +531,7 @@ a:hover .sc-img img,a:focus-visible .sc-img img,
 .quote-cover{margin:8px 0 30px;border:1px solid var(--line);overflow:hidden;background:transparent}
 .quote-cover img{display:block;width:100%;height:auto}
 .quote-cover figcaption{font-family:var(--sans);font-size:11.5px;color:var(--muted-2);line-height:1.9;padding:10px 14px;border-top:1px solid var(--line)}
+
+/* 语录：姓名章 */
+.quote-group-head{align-items:center;gap:12px}
+.quote-seal{width:40px;height:40px;display:grid;place-items:center;flex:0 0 40px;background:var(--zhu);color:var(--paper);font-family:var(--serif);font-size:21px;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}

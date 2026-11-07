@@ -766,8 +766,8 @@ function viewQuotes() {
     <div class="wrap quotes-wrap">
       ${groups.map(g => `
         <section class="quote-group">
-          <div class="quote-group-head"><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
-          ${g.who === '习近平' ? `<figure class="quote-cover"><img src="assets/img/quotes/xi-cover.jpg" alt="清晨的办公桌" loading="lazy"><figcaption>图：清晨的办公桌。廉洁不是抽象态度，是每天怎么处理手边这些文件、账目与请托。</figcaption></figure>` : ''}
+          <div class="quote-group-head"><span class="quote-seal">${g.who.charAt(0)}</span><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
+          ${QUOTE_COVERS[g.who] ? `<figure class="quote-cover"><img src="assets/img/quotes/${QUOTE_COVERS[g.who].img}" alt="${g.who}专栏配图" loading="lazy"><figcaption>${QUOTE_COVERS[g.who].cap}</figcaption></figure>` : ''}
           ${g.items.map(q => `
             <blockquote class="quote-item">
               <p>${q.text}</p>
@@ -775,7 +775,7 @@ function viewQuotes() {
               <div class="quote-note">${q.note}</div>
             </blockquote>`).join('')}
         </section>`).join('')}
-      <p class="muted small" style="margin-top:32px;line-height:1.9">说明：语录文字以公开发表的讲话、文章与报告为准；引用时请核对原文与最新出版版本。</p>
+      <p class="muted small" style="margin-top:32px;line-height:1.9">说明：语录文字以公开发表的讲话、文章与报告为准；引用时请核对原文与最新出版版本。本页插图为水墨示意，不是历史照片。</p>
     </div>
   </section>`;
 }
