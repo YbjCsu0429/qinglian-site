@@ -821,6 +821,45 @@ function viewBooks() {
   </section>`;
 }
 
+/* ---------------- 滚动与入场 ---------------- */
+function initSmoothScroll() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!matchMedia('(pointer: fine)').matches) return;
+
+  let target = window.scrollY;
+  let current = target;
+  let raf = null;
+  const maxY = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+  function tick() {
+    target = Math.min(target, maxY());
+    current += (target - current) * 0.18;
+    if (Math.abs(target - current) < 0.5) {
+      current = target;
+      window.scrollTo(0, current);
+      raf = null;
+      return;
+    }
+    window.scrollTo(0, current);
+    raf = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.defaultPrevented) return;
+    const el = e.target instanceof Element ? e.target : null;
+    if (el && el.closest('input, textarea, select, .chat-log, .search-results')) return;
+    // 触控板的小增量交给原生滚动，只给鼠标滚轮做缓动
+    if (Math.abs(e.deltaY) < 40) return;
+    e.preventDefault();
+    target = Math.min(maxY(), Math.max(0, target + e.deltaY));
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: false });
+
+  window.addEventListener('scroll', () => {
+    if (!raf) { target = window.scrollY; current = target; }
+  }, { passive: true });
+}
+
 /* ---------------- 路由 ---------------- */
 function render() {
   const { route, id, params } = parseHash();
@@ -846,6 +885,7 @@ function render() {
   document.title = (route === 'home' ? '青廉筑梦 · 廉洁知识导航' :
     { library: '知识库', figures: '人物事迹', resources: '学习资源', quotes: '廉洁语录', books: '廉洁书单', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
     + ' · 青廉筑梦';
+
 }
 
 function bindLibrary() {
@@ -874,6 +914,7 @@ document.addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement !== $('#searchInput')) { e.preventDefault(); openSearch(); }
 });
 
+initSmoothScroll();
 render();
 
 /* ===========================================================
