@@ -881,6 +881,48 @@ function initScrollProgress() {
   update();
 }
 
+function bindMagnifier() {
+  document.querySelectorAll('.section-head h2').forEach(h2 => {
+    if (h2.dataset.mag) return;
+    h2.dataset.mag = '1';
+
+    const text = h2.textContent;
+    h2.textContent = '';
+    [...text].forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'mag-char';
+      span.textContent = ch === ' ' ? '\u00a0' : ch;
+      h2.appendChild(span);
+    });
+
+    const chars = [...h2.querySelectorAll('.mag-char')];
+    const radius = 92;
+
+    const reset = () => chars.forEach(span => {
+      span.style.transform = '';
+      span.classList.remove('is-hot');
+    });
+
+    h2.addEventListener('mousemove', e => {
+      chars.forEach(span => {
+        const box = span.getBoundingClientRect();
+        const center = box.left + box.width / 2;
+        const dist = Math.abs(center - e.clientX);
+        if (dist < radius) {
+          const k = 1 - dist / radius;
+          span.style.transform = `translateY(${(-k * 9).toFixed(1)}px) scale(${(1 + k * 0.45).toFixed(3)})`;
+          span.classList.add('is-hot');
+        } else {
+          span.style.transform = '';
+          span.classList.remove('is-hot');
+        }
+      });
+    });
+
+    h2.addEventListener('mouseleave', reset);
+  });
+}
+
 /* ---------------- 路由 ---------------- */
 function render() {
   const { route, id, params } = parseHash();
@@ -907,6 +949,7 @@ function render() {
     { library: '知识库', figures: '人物事迹', resources: '学习资源', quotes: '廉洁语录', books: '廉洁书单', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
     + ' · 青廉筑梦';
 
+  bindMagnifier();
 }
 
 function bindLibrary() {
