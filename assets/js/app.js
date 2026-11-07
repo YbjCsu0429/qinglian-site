@@ -58,9 +58,12 @@ function viewHome() {
           ['书', '知识库', '12 篇专题，按四维九廉分类', '#/library'],
           ['人', '人物事迹', '8 位廉吏与时代楷模', '#/figures'],
           ['资', '学习资源', '政策、理论、50 本书单', '#/resources'],
+          ['语', '廉洁语录', '历届领导人论廉洁', '#/quotes'],
+          ['书', '廉洁书单', '27 本，按主题分类', '#/books'],
           ['景', '情景实训', '3 个脚本，9 个决策点', '#/scenario'],
           ['法', '法规制度', '10 部制度要点', '#/rules'],
-          ['问', '廉洁AI', `${KB.length} 条知识，带出处`, '#/ai']
+          ['问', '廉洁AI', `${KB.length} 条知识，带出处`, '#/ai'],
+          ['项', '关于项目', '四维九廉与团队', '#/about']
         ].map(([ico, t, d, href]) => `
           <a class="entry" href="${href}">
             <span class="entry-ico">${ico}</span>
@@ -349,6 +352,7 @@ function viewResources() {
       <h1>学习资源</h1>
       <p>政策依据、理论框架、传统文化、红色文化、文学作品、警示案例、实践模式，以及 50 本推荐书目。
          内容整理自项目组《廉洁教育 AI 训练资料》，供主题班会、读书会与课题调研取用。</p>
+      <p class="muted small">另见 <a href="#/books" style="border-bottom:1px solid var(--line-2)">廉洁书单</a>：27 本，每本附一句读法。</p>
     </div>
   </section>
   <section class="section-tight">
@@ -721,6 +725,8 @@ function buildIndex() {
   SCENARIOS.forEach(s => idx.push({ t: s.title, s: s.sub, href: '#/scenario/' + s.id, k: '情景 · 实训' }));
   RESOURCES.forEach(r => r.items.forEach(i => idx.push({ t: i.t, s: i.d.slice(0, 60), href: '#/resources', k: '资源 · ' + r.title })));
   BOOKS.forEach(b => idx.push({ t: b.cat, s: b.items.slice(0, 3).join('、'), href: '#/resources', k: '书目' }));
+  QUOTES.forEach(q => idx.push({ t: q.who + '：' + q.text.slice(0, 24), s: q.source, href: '#/quotes', k: '语录 · ' + q.who }));
+  BOOKLIST.forEach(b => idx.push({ t: b.title, s: b.note, href: '#/books', k: '书单 · ' + b.cat }));
   KB.forEach(k => idx.push({ t: k.q, s: k.a.slice(0, 60), href: k.link || '#/ai', k: '知识 · AI' }));
   return idx;
 }
@@ -743,6 +749,64 @@ function openSearch() {
 }
 function closeSearch() { $('#searchOverlay').hidden = true; }
 
+
+/* ---------------- 廉洁语录 ---------------- */
+function viewQuotes() {
+  const order = ['习近平','毛泽东','邓小平','江泽民','胡锦涛','陈云','刘少奇'];
+  const groups = order.map(who => ({ who, items: QUOTES.filter(q => q.who === who) })).filter(g => g.items.length);
+  return `
+  <section class="page-head">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="#/home">首页</a> / 廉洁语录</div>
+      <h1>廉洁语录</h1>
+      <p>按人物分组，逐条注明讲话、文章或报告出处。语录不是口号，读的时候请连同它出现的场合一起看。</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap quotes-wrap">
+      ${groups.map(g => `
+        <section class="quote-group">
+          <div class="quote-group-head"><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
+          ${g.items.map(q => `
+            <blockquote class="quote-item">
+              <p>${q.text}</p>
+              <footer>${q.source}</footer>
+              <div class="quote-note">${q.note}</div>
+            </blockquote>`).join('')}
+        </section>`).join('')}
+      <p class="muted small" style="margin-top:32px;line-height:1.9">说明：语录文字以公开发表的讲话、文章与报告为准；引用时请核对原文与最新出版版本。</p>
+    </div>
+  </section>`;
+}
+
+/* ---------------- 廉洁书单 ---------------- */
+function viewBooks() {
+  const cats = [...new Set(BOOKLIST.map(b => b.cat))];
+  return `
+  <section class="page-head">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="#/home">首页</a> / 廉洁书单</div>
+      <h1>廉洁书单</h1>
+      <p>27 本，分六类。每本只写一句“怎么读”，不写内容简介——简介会替代你读书。</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap books-wrap">
+      ${cats.map(cat => `
+        <section class="book-cat">
+          <h2>${cat}</h2>
+          <div class="book-list">
+            ${BOOKLIST.filter(b => b.cat === cat).map(b => `
+              <article class="book-item">
+                <div class="book-main"><h3>${b.title}</h3><div class="book-meta">${b.author} · ${b.meta}</div></div>
+                <p class="book-note">${b.note}</p>
+              </article>`).join('')}
+          </div>
+        </section>`).join('')}
+    </div>
+  </section>`;
+}
+
 /* ---------------- 路由 ---------------- */
 function render() {
   const { route, id, params } = parseHash();
@@ -754,6 +818,8 @@ function render() {
   else if (route === 'article') view.innerHTML = viewArticle(id);
   else if (route === 'figures') view.innerHTML = viewFigures();
   else if (route === 'resources') view.innerHTML = viewResources();
+  else if (route === 'quotes') view.innerHTML = viewQuotes();
+  else if (route === 'books') view.innerHTML = viewBooks();
   else if (route === 'scenario') {
     if (id) { view.innerHTML = viewScenario(id); const s = byId(SCENARIOS, id); if (s) bindScenario(s); }
     else view.innerHTML = viewScenarioList();
@@ -764,7 +830,7 @@ function render() {
   else view.innerHTML = notFound();
 
   document.title = (route === 'home' ? '青廉筑梦 · 廉洁知识导航' :
-    { library: '知识库', figures: '人物事迹', resources: '学习资源', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
+    { library: '知识库', figures: '人物事迹', resources: '学习资源', quotes: '廉洁语录', books: '廉洁书单', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
     + ' · 青廉筑梦';
 }
 
