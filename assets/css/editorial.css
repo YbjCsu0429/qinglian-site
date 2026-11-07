@@ -674,3 +674,17 @@ a:hover .fc-img img,a:hover .sc-img img{transform:scale(1.07)}
 @media (prefers-reduced-motion:reduce){
   .title-char{opacity:1;transform:none;filter:none;animation:none!important}
 }
+
+/* 栏目标题下的说明文字：整段上浮，不逐字 */
+.para-reveal{opacity:0;transform:translateY(16px);filter:blur(3px)}
+.para-in{
+  animation:paraRise .72s cubic-bezier(.16,.84,.24,1) both;
+  animation-delay:.38s;
+}
+.qr-url.para-in{animation-delay:.52s}
+@keyframes paraRise{to{opacity:1;transform:none;filter:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .para-reveal{opacity:1;transform:none;filter:none}
+  .para-in{animation:none}
+}

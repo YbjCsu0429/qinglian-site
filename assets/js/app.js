@@ -899,6 +899,11 @@ function bindTitleChars() {
       outer.appendChild(inner);
       h2.appendChild(outer);
     });
+
+    const scope = h2.closest('.section-head, .qr-band-text');
+    if (scope) {
+      scope.querySelectorAll('p, .qr-url').forEach(el => el.classList.add('para-reveal'));
+    }
   });
 }
 
@@ -908,7 +913,11 @@ function initTitleReveal() {
     document.querySelectorAll('h2[data-chars]').forEach(h2 => {
       if (h2.classList.contains('chars-in')) return;
       const r = h2.getBoundingClientRect();
-      if (r.top < vh * 0.9 && r.bottom > 0) h2.classList.add('chars-in');
+      if (r.top < vh * 0.9) {
+        h2.classList.add('chars-in');
+        const scope = h2.closest('.section-head, .qr-band-text');
+        if (scope) scope.querySelectorAll('.para-reveal').forEach(el => el.classList.add('para-in'));
+      }
     });
   };
 
@@ -919,6 +928,7 @@ function initTitleReveal() {
   if (!titleRevealBound) {
     window.addEventListener('scroll', check, { passive: true });
     window.addEventListener('resize', check);
+    setInterval(check, 400);
     titleRevealBound = true;
   }
 }
