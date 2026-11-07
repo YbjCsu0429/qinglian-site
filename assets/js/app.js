@@ -976,12 +976,27 @@ function bindMagnifier() {
   });
 }
 
-function bindQuoteIndex() {
-  document.querySelectorAll('.quote-index [data-qwho]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const el = document.getElementById('quote-' + btn.dataset.qwho);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+function smoothTo(y) {
+  const start = window.scrollY;
+  const dist = y - start;
+  const t0 = performance.now();
+  function step(now) {
+    const p = Math.min(1, (now - t0) / 480);
+    const e = 1 - Math.pow(1 - p, 3);
+    window.scrollTo(0, start + dist * e);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function initQuoteIndex() {
+  document.addEventListener('click', e => {
+    const btn = e.target instanceof Element ? e.target.closest('.quote-index [data-qwho]') : null;
+    if (!btn) return;
+    const el = document.getElementById('quote-' + btn.dataset.qwho);
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 122;
+    smoothTo(y);
   });
 }
 
@@ -993,7 +1008,7 @@ function initBackTop() {
   btn.textContent = '回到顶部';
   btn.setAttribute('aria-label', '回到顶部');
   document.body.appendChild(btn);
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  btn.addEventListener('click', () => window.scrollTo(0, 0));
   const update = () => btn.classList.toggle('show', window.scrollY > 600);
   window.addEventListener('scroll', update, { passive: true });
   update();
@@ -1010,7 +1025,7 @@ function render() {
   else if (route === 'article') view.innerHTML = viewArticle(id);
   else if (route === 'figures') view.innerHTML = viewFigures();
   else if (route === 'resources') view.innerHTML = viewResources();
-  else if (route === 'quotes') { view.innerHTML = viewQuotes(); bindQuoteIndex(); }
+  else if (route === 'quotes') view.innerHTML = viewQuotes();
   else if (route === 'books') view.innerHTML = viewBooks();
   else if (route === 'scenario') {
     if (id) { view.innerHTML = viewScenario(id); const s = byId(SCENARIOS, id); if (s) bindScenario(s); }
@@ -1059,6 +1074,7 @@ document.addEventListener('keydown', e => {
 initSmoothScroll();
 initScrollProgress();
 initBackTop();
+initQuoteIndex();
 render();
 
 /* ===========================================================
