@@ -230,7 +230,9 @@ a{text-underline-offset:3px}
 .fc-img{background:transparent;padding:0;border:0}
 .fc-img img{filter:grayscale(1) contrast(1.04);transition:none}
 .fig-card:hover .fc-img img{transform:none}
-.fig-card-v{grid-template-columns:260px 1fr}
+.fig-card-v{grid-template-columns:240px 1fr;align-items:start}
+.fig-card-v .fc-img{height:auto;min-height:0}
+.fig-card-v .fc-img img{height:auto;width:100%;aspect-ratio:1/1;object-fit:contain}
 .fc-body{padding:20px 22px}
 .fc-p{font-size:13.5px;color:var(--ink-2);line-height:1.95}
 
@@ -398,6 +400,9 @@ a{text-underline-offset:3px}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
+
+
+
 
 
 
