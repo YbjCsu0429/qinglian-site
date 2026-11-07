@@ -881,22 +881,56 @@ function initScrollProgress() {
   update();
 }
 
+let titleRevealBound = false;
+
+function bindTitleChars() {
+  document.querySelectorAll('.section-head h2, .qr-band-text h2').forEach(h2 => {
+    if (h2.dataset.chars) return;
+    h2.dataset.chars = '1';
+    const text = h2.textContent;
+    h2.textContent = '';
+    [...text].forEach((ch, i) => {
+      const outer = document.createElement('span');
+      outer.className = 'title-char';
+      outer.style.setProperty('--i', i);
+      const inner = document.createElement('span');
+      inner.className = 'mag-char';
+      inner.textContent = ch === ' ' ? '\u00a0' : ch;
+      outer.appendChild(inner);
+      h2.appendChild(outer);
+    });
+  });
+}
+
+function initTitleReveal() {
+  const check = () => {
+    const vh = window.innerHeight;
+    document.querySelectorAll('h2[data-chars]').forEach(h2 => {
+      if (h2.classList.contains('chars-in')) return;
+      const r = h2.getBoundingClientRect();
+      if (r.top < vh * 0.9 && r.bottom > 0) h2.classList.add('chars-in');
+    });
+  };
+
+  check();
+  requestAnimationFrame(check);
+  setTimeout(check, 600);
+
+  if (!titleRevealBound) {
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    titleRevealBound = true;
+  }
+}
+
 function bindMagnifier() {
   document.querySelectorAll('.section-head h2').forEach(h2 => {
     if (h2.dataset.mag) return;
     h2.dataset.mag = '1';
 
-    const text = h2.textContent;
-    h2.textContent = '';
-    [...text].forEach(ch => {
-      const span = document.createElement('span');
-      span.className = 'mag-char';
-      span.textContent = ch === ' ' ? '\u00a0' : ch;
-      h2.appendChild(span);
-    });
-
     const chars = [...h2.querySelectorAll('.mag-char')];
     const radius = 84;
+    if (!chars.length) return;
 
     const reset = () => chars.forEach(span => {
       span.style.transform = '';
@@ -949,7 +983,9 @@ function render() {
     { library: '知识库', figures: '人物事迹', resources: '学习资源', quotes: '廉洁语录', books: '廉洁书单', scenario: '情景实训', rules: '法规制度', ai: '廉洁AI', about: '关于项目', article: '文章' }[route] || '页面')
     + ' · 青廉筑梦';
 
+  bindTitleChars();
   bindMagnifier();
+  initTitleReveal();
 }
 
 function bindLibrary() {

@@ -656,3 +656,21 @@ a:hover .fc-img img,a:hover .sc-img img{transform:scale(1.07)}
 @media (prefers-reduced-motion:reduce){
   .mag-char{transition:none}
 }
+
+/* 首页栏目标题：滚动到视口时，逐字落下（与首屏标题同一套动作） */
+.title-char{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(46px) rotate(4deg);
+  filter:blur(6px);
+  will-change:transform,opacity,filter;
+}
+.chars-in .title-char{
+  animation:charRise .85s cubic-bezier(.16,.84,.24,1) both;
+  animation-delay:calc(var(--i) * 55ms);
+}
+@keyframes charRise{to{opacity:1;transform:none;filter:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .title-char{opacity:1;transform:none;filter:none;animation:none!important}
+}
