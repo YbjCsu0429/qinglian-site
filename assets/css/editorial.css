@@ -688,3 +688,27 @@ a:hover .fc-img img,a:hover .sc-img img{transform:scale(1.07)}
   .para-reveal{opacity:1;transform:none;filter:none}
   .para-in{animation:none}
 }
+
+/* 首屏右侧：馆的实景图版 */
+.hero-side{display:flex;flex-direction:column;gap:22px;min-width:0}
+.hero-hall{margin:0;border:1px solid var(--line);overflow:hidden;background:var(--paper);animation:heroLabelIn .9s cubic-bezier(.16,.84,.24,1) .2s both}
+.hero-hall img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1) contrast(1.06) brightness(1.1)}
+.hero-hall figcaption{font-family:var(--sans);font-size:11.5px;color:var(--muted-2);line-height:1.8;padding:9px 12px;border-top:1px solid var(--line)}
+
+/* 馆内细节：三张一条，作为首屏到目录的过渡 */
+.hall-strip{display:grid;grid-template-columns:repeat(3,1fr);background:var(--paper);border-bottom:1px solid var(--line)}
+.hall-strip figure{margin:0;border-right:1px solid var(--line);overflow:hidden}
+.hall-strip figure:last-child{border-right:0}
+.hall-strip img{display:block;width:100%;height:240px;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(1.1)}
+.hall-strip figcaption{font-family:var(--sans);font-size:11.5px;color:var(--muted-2);line-height:1.8;padding:9px 14px;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .hero-hall img{aspect-ratio:16/10}
+  .hall-strip{grid-template-columns:1fr}
+  .hall-strip figure{border-right:0;border-bottom:1px solid var(--line)}
+  .hall-strip figure:last-child{border-bottom:0}
+  .hall-strip img{height:200px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-hall{animation:none}
+}
