@@ -93,5 +93,66 @@ const AI = (() => {
     return { html };
   }
 
-  return { answer, tokenize };
+  function stripTags(html) {
+    return String(html)
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&amp;/gi, '&')
+      .replace(/&lt;/gi, '<')
+      .replace(/&gt;/gi, '>')
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function decodeEntities(text) {
+    const d = document.createElement('textarea');
+    d.innerHTML = text;
+    return d.value;
+  }
+
+  async function webSearch(query) {
+    const q = String(query || '').trim();
+    if (!q) return [];
+
+    const endpoint = (typeof SITE !== 'undefined' && SITE.webSearch && SITE.webSearch.endpoint)
+      || 'https://api.rss2json.com/v1/api.json';
+    const rss = 'https://www.bing.com/news/search?format=RSS&q=' + encodeURIComponent(q);
+    const url = endpoint + '?rss_url=' + encodeURIComponent(rss);
+
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 9000);
+    try {
+      const res = await fetch(url, { signal: ctrl.signal });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const items = data && data.status === 'ok' && Array.isArray(data.items) ? data.items : [];
+
+      const BAD = /色情|吃瓜|爆料|自慰|抽插|Onlyfans|裸聊|约炮|博彩|赌场/i;
+      return items
+        .filter(it => it && it.title && it.link && /^https?:/i.test(it.link))
+        .map(it => {
+          let link = it.link;
+          try {
+            const u = new URL(it.link);
+            link = u.searchParams.get('url') || it.link;
+          } catch (e) {}
+          let site = '';
+          try { site = new URL(link).hostname.replace(/^www\./, ''); } catch (e) {}
+          return {
+            title: decodeEntities(it.title),
+            link,
+            snippet: stripTags(it.description || '').slice(0, 190),
+            site
+          };
+        })
+        .filter(it => !BAD.test(it.title + it.snippet))
+        .slice(0, 4);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  return { answer, tokenize, webSearch };
 })();

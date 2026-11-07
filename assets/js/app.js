@@ -582,7 +582,7 @@ function viewAI() {
     <div class="wrap">
       <div class="breadcrumb"><a href="#/home">首页</a> / 廉洁AI</div>
       <h1>廉洁AI</h1>
-      <p>基于 ${KB.length} 条知识条目的检索式问答。它不生成新内容，只把最相关的条目连同出处一起给你——因为在这个领域，“说得漂亮”远不如“可被核查”重要。</p>
+      <p>基于 ${KB.length} 条知识条目的检索式问答。它不生成新内容，只把最相关的条目连同出处一起给你——因为在这个领域，“说得漂亮”远不如“可被核查”重要。 默认只查站内；切到“联网补充”会同时检索 Bing 新闻，并标注来源。</p>
     </div>
   </section>
   <section>
@@ -592,6 +592,10 @@ function viewAI() {
           <span class="chat-dot"></span>
           <b>廉洁AI · 检索式</b>
           <span>知识库 v1.0 · ${KB.length} 条</span>
+          <div class="ai-mode" id="aiMode" role="group" aria-label="回答模式">
+            <button type="button" data-web="0" class="on">站内知识</button>
+            <button type="button" data-web="1">联网补充</button>
+          </div>
         </div>
         <div class="chat-log" id="chatLog">
           <div class="msg bot">
@@ -620,7 +624,7 @@ function viewAI() {
         </div>
         <div class="panel">
           <h4>边界声明</h4>
-          <p class="disclaimer">本工具为教育辅助，不替代专业判断与法律咨询。法规条文以官方文本为准。</p>
+          <p class="disclaimer">本工具为教育辅助，不替代专业判断与法律咨询。法规条文以官方文本为准。 联网补充会把问题发送给 Bing 新闻与 rss2json 以获取公开结果，不发送个人信息。</p>
         </div>
       </aside>
     </div>
@@ -633,21 +637,57 @@ function bindAI() {
   const log = $('#chatLog');
   if (!form) return;
 
+  let webMode = false;
+  const modeBtns = [...document.querySelectorAll('#aiMode [data-web]')];
+  modeBtns.forEach(btn => btn.addEventListener('click', () => {
+    webMode = btn.dataset.web === '1';
+    modeBtns.forEach(b => b.classList.toggle('on', b === btn));
+  }));
+
   const push = (role, html) => {
     const el = document.createElement('div');
     el.className = 'msg ' + role;
     el.innerHTML = `<div class="avatar">${role === 'bot' ? '廉' : '我'}</div><div class="bubble">${html}</div>`;
     log.appendChild(el);
     log.scrollTop = log.scrollHeight;
+    return el.querySelector('.bubble');
+  };
+
+  const renderWeb = items => {
+    if (!items.length) {
+      return `<div class="cite">联网没有返回可用结果；先看上面的站内回答，或换个说法再试。</div>`;
+    }
+    return `<div class="web-results">
+      <div class="web-head"><span>联网检索</span><em>Bing 新闻 · ${items.length} 条</em></div>
+      <ol>
+        ${items.map(it => `<li>
+          <a href="${it.link}" target="_blank" rel="noopener noreferrer">${esc(it.title)}</a>
+          <p>${esc(it.snippet)}</p>
+          <span class="web-site">${esc(it.site)}</span>
+        </li>`).join('')}
+      </ol>
+      <div class="cite">联网结果未做事实核验；与站内知识冲突时，以官方文本为准。</div>
+    </div>`;
   };
 
   const ask = q => {
     if (!q.trim()) return;
     push('user', esc(q));
     const res = AI.answer(q);
-    setTimeout(() => {
+
+    setTimeout(async () => {
       if (!res) { push('bot', '请输入一个问题。'); return; }
       push('bot', res.html);
+      if (!webMode) return;
+
+      const bubble = push('bot', '<div class="web-loading">正在联网检索公开结果…</div>');
+      try {
+        const items = await AI.webSearch(q);
+        bubble.innerHTML = renderWeb(items);
+      } catch (e) {
+        bubble.innerHTML = '<div class="cite">联网检索失败（可能是网络或服务限制），先看上面的站内回答。</div>';
+      }
+      log.scrollTop = log.scrollHeight;
     }, 260);
   };
 
