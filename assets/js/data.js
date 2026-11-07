@@ -16,12 +16,7 @@ const SITE = {
   // 手机访问地址：部署到公网后填这里，首页与导览欢迎页会自动显示二维码
   // 用 `python tools/make_qr.py <你的网址> --install` 可自动写入并生成二维码
   qrUrl: 'https://ybjcsu0429.github.io/qinglian-site/',
-  qrImg: 'assets/img/qr.png',
-  // 联网补充：Bing 公开 RSS → rss2json（无需密钥，前端可跨域）
-  webSearch: {
-    endpoint: 'https://api.rss2json.com/v1/api.json',
-    provider: 'Bing 新闻'
-  }
+  qrImg: 'assets/img/qr.png'
 };
 
 /* ---------------- 四维 ---------------- */
