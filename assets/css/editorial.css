@@ -526,3 +526,8 @@ a:hover .sc-img img,a:focus-visible .sc-img img,
   .icon-btn{transition:none}
   #view{animation:none}
 }
+
+/* 语录专栏配图 */
+.quote-cover{margin:8px 0 30px;border:1px solid var(--line);overflow:hidden;background:transparent}
+.quote-cover img{display:block;width:100%;height:auto}
+.quote-cover figcaption{font-family:var(--sans);font-size:11.5px;color:var(--muted-2);line-height:1.9;padding:10px 14px;border-top:1px solid var(--line)}

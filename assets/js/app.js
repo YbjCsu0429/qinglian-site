@@ -767,6 +767,7 @@ function viewQuotes() {
       ${groups.map(g => `
         <section class="quote-group">
           <div class="quote-group-head"><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
+          ${g.who === '习近平' ? `<figure class="quote-cover"><img src="assets/img/quotes/xi-cover.jpg" alt="清晨的办公桌" loading="lazy"><figcaption>图：清晨的办公桌。廉洁不是抽象态度，是每天怎么处理手边这些文件、账目与请托。</figcaption></figure>` : ''}
           ${g.items.map(q => `
             <blockquote class="quote-item">
               <p>${q.text}</p>
