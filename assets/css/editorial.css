@@ -573,7 +573,7 @@ a:hover .sc-img img,a:focus-visible .sc-img img,
 .page-head .wrap > p{animation:headIn .65s ease .18s both}
 
 /* 路由切换：整页更明显的淡入上移 */
-@keyframes pageIn2{from{opacity:.55;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pageIn2{from{opacity:.55}to{opacity:1}}
 #view{animation:pageIn2 .42s cubic-bezier(.2,.7,.2,1) both}
 
 /* 滚动到视口时：标题与卡片上浮，幅度比上一版更大 */
@@ -600,4 +600,42 @@ a:hover .fc-img img,a:hover .sc-img img{transform:scale(1.07)}
 @media (prefers-reduced-motion:reduce){
   .hero-kicker,.hero-copy h1,.hero-sub,.hero-lead,.hero-actions,.hero-note,.hero-label,
   .page-head .breadcrumb,.page-head h1,.page-head .wrap > p,#view{animation:none}
+}
+
+/* ===========================================================
+   再上一层：逐字入场、图片横向揭开、滚动倾斜
+   =========================================================== */
+
+/* 首页标题逐字落下 */
+.hero-copy h1.hero-title{animation:none}
+.hero-title span{display:inline-block;animation:charIn 1s cubic-bezier(.16,.84,.24,1) both}
+.hero-title span:nth-child(1){animation-delay:.06s}
+.hero-title span:nth-child(2){animation-delay:.14s}
+.hero-title span:nth-child(3){animation-delay:.22s}
+.hero-title span:nth-child(4){animation-delay:.30s}
+@keyframes charIn{
+  from{opacity:0;transform:translateY(54px) rotate(4deg);filter:blur(6px)}
+  to{opacity:1;transform:none;filter:none}
+}
+
+/* 卡片上浮更明显 */
+@keyframes riseIn{from{opacity:0;transform:translateY(46px) scale(.96)}to{opacity:1;transform:none}}
+
+/* 图片像幕布一样从左往右揭开 */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .quote-cover img,.fc-img img,.sc-img img,.prose-img img{
+      animation:imgWipe 1s linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 45%;
+    }
+  }
+}
+@keyframes imgWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+
+/* 进度条再粗一点 */
+.scroll-progress{height:4px}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-title span{animation:none}
 }

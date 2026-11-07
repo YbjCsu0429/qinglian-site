@@ -33,7 +33,7 @@ function viewHome() {
     <div class="wrap hero-a-inner">
       <div class="hero-copy">
         <p class="hero-kicker">中南大学　大学生创新创业训练计划</p>
-        <h1>青廉筑梦</h1>
+        <h1 class="hero-title"><span>青</span><span>廉</span><span>筑</span><span>梦</span></h1>
         <p class="hero-sub">廉洁知识导航</p>
         <p class="hero-lead">从廉洁教育馆出发，把参观、阅读和情景练习连成一条线。四维九廉，${ARTICLES.length} 篇专题，${KB.length} 条带出处的知识。</p>
         <p class="hero-actions">
@@ -873,6 +873,11 @@ function initScrollProgress() {
   const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule);
+  if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(document.body);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  setTimeout(schedule, 600);
+  setTimeout(schedule, 1800);
   update();
 }
 
