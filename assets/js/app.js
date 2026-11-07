@@ -754,6 +754,19 @@ function closeSearch() { $('#searchOverlay').hidden = true; }
 function viewQuotes() {
   const order = ['习近平','毛泽东','邓小平','江泽民','胡锦涛','陈云','刘少奇'];
   const groups = order.map(who => ({ who, items: QUOTES.filter(q => q.who === who) })).filter(g => g.items.length);
+
+  const itemsHtml = items => items.map(q => `
+    <blockquote class="quote-item">
+      <p>${q.text}</p>
+      <footer>${q.source}</footer>
+      <div class="quote-note">${q.note}</div>
+    </blockquote>`).join('');
+
+  const coverHtml = who => {
+    const c = QUOTE_COVERS[who];
+    return c ? `<figure class="quote-cover"><img src="assets/img/quotes/${c.img}" alt="${who}专栏配图" loading="lazy"><figcaption>${c.cap}</figcaption></figure>` : '';
+  };
+
   return `
   <section class="page-head">
     <div class="wrap">
@@ -764,17 +777,17 @@ function viewQuotes() {
   </section>
   <section class="section-tight">
     <div class="wrap quotes-wrap">
-      ${groups.map(g => `
-        <section class="quote-group">
+      ${groups.map(g => {
+        const side = g.items.length === 1;
+        const body = side
+          ? `<div class="quote-side"><div class="quote-side-text">${itemsHtml(g.items)}</div>${coverHtml(g.who)}</div>`
+          : `${coverHtml(g.who)}${itemsHtml(g.items)}`;
+        return `
+        <section class="quote-group${side ? ' quote-group--side' : ''}">
           <div class="quote-group-head"><span class="quote-seal">${g.who.charAt(0)}</span><h2>${g.who}</h2><span>${g.items[0].era}</span></div>
-          ${QUOTE_COVERS[g.who] ? `<figure class="quote-cover"><img src="assets/img/quotes/${QUOTE_COVERS[g.who].img}" alt="${g.who}专栏配图" loading="lazy"><figcaption>${QUOTE_COVERS[g.who].cap}</figcaption></figure>` : ''}
-          ${g.items.map(q => `
-            <blockquote class="quote-item">
-              <p>${q.text}</p>
-              <footer>${q.source}</footer>
-              <div class="quote-note">${q.note}</div>
-            </blockquote>`).join('')}
-        </section>`).join('')}
+          ${body}
+        </section>`;
+      }).join('')}
       <p class="muted small" style="margin-top:32px;line-height:1.9">说明：语录文字以公开发表的讲话、文章与报告为准；引用时请核对原文与最新出版版本。本页插图为水墨示意，不是历史照片。</p>
     </div>
   </section>`;
