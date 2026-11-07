@@ -30,6 +30,8 @@ function viewHome() {
   const featured = ['a1', 'a7', 'a4', 'a11'].map(id => byId(ARTICLES, id)).filter(Boolean);
   return `
   <section class="hero hero-a">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
     <div class="wrap hero-a-inner">
       <div class="hero-copy">
         <p class="hero-kicker">中南大学　大学生创新创业训练计划</p>
@@ -42,34 +44,14 @@ function viewHome() {
         </p>
         <p class="hero-note">馆内触摸屏可离线使用</p>
       </div>
-      <div class="hero-side">
       <aside class="hero-label" aria-label="项目信息">
         <div class="label-row"><span>展项</span><b>青廉筑梦 · 廉洁知识导航</b></div>
         <div class="label-row"><span>体系</span><b>四维 / 九廉</b></div>
         <div class="label-row"><span>内容</span><b>${ARTICLES.length} 篇专题 · ${SCENARIOS.length} 个情景 · ${KB.length} 条知识</b></div>
         <div class="label-row"><span>单位</span><b>中南大学</b></div>
       </aside>
-      <figure class="hero-hall">
-        <img src="assets/img/hall/entrance.jpg" alt="中南大学廉洁教育馆入口" loading="eager">
-        <figcaption>廉洁教育馆 · 入口</figcaption>
-      </figure>
-      </div>
     </div>
-  </section>
-
-  <section class="hall-strip" aria-label="廉洁教育馆实景">
-    <figure>
-      <img src="assets/img/hall/calligraphy.jpg" alt="馆内手书卷轴" loading="lazy">
-      <figcaption>馆内 · 手书卷轴</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/img/hall/preface.jpg" alt="馆内前言墙" loading="lazy">
-      <figcaption>馆内 · 前言墙</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/img/hall/ending.jpg" alt="馆内结语与莲花" loading="lazy">
-      <figcaption>馆内 · 结语</figcaption>
-    </figure>
+    <p class="hero-credit">实景 · 中南大学廉洁教育馆</p>
   </section>
 
   <section class="section entry-sec">
