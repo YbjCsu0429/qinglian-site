@@ -860,6 +860,22 @@ function initSmoothScroll() {
   }, { passive: true });
 }
 
+function initScrollProgress() {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+  let raf = null;
+  const update = () => {
+    raf = null;
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    bar.style.transform = `scaleX(${Math.min(1, Math.max(0, window.scrollY / max))})`;
+  };
+  const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  update();
+}
+
 /* ---------------- 路由 ---------------- */
 function render() {
   const { route, id, params } = parseHash();
@@ -915,6 +931,7 @@ document.addEventListener('keydown', e => {
 });
 
 initSmoothScroll();
+initScrollProgress();
 render();
 
 /* ===========================================================
